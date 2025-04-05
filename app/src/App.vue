@@ -5,6 +5,8 @@
 <template>
   <header>
     <RouterLink to="/organizations">Организации</RouterLink>
+    <RouterLink to="/departments">Отделы</RouterLink>
+    <RouterLink to="/professions">Должности</RouterLink>
   </header>
 
   <main>
