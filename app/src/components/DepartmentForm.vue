@@ -17,7 +17,7 @@
       <div>
         <label for="parent_id">Родительский отдел</label>
         <select v-model="department.parent_id">
-          <option value="" disabled>Выберите родительский отдел</option>
+          <option value="" disabled>Выберите отдел</option>
           <option v-for="dept in departments" :key="dept.id" :value="dept.id">
             {{ dept.name }}
           </option>

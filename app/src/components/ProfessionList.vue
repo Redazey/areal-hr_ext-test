@@ -37,11 +37,11 @@ onMounted(() => {
 const profession = appStore.profession;
 
 const addProfession = () => {
-  router.push('/profession/new');
+  router.push('/professions/new');
 };
 
 const editProfession = (id) => {
-  router.push(`/profession/edit/${id}`);
+  router.push(`/professions/edit/${id}`);
 };
 
 const deleteProfession = (id) => {

@@ -24,7 +24,8 @@ form div {
 }
 
 input[type="text"],
-textarea {
+textarea,
+select{
   width: 50%;
   padding: 10px;
   margin: 10px 0;

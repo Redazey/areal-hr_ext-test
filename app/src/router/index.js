@@ -3,6 +3,8 @@ import OrganizationList from '@/components/OrganizationList.vue';
 import OrganizationForm from '@/components/OrganizationForm.vue';
 import DepartmentList from "@/components/DepartmentList.vue";
 import DepartmentForm from "@/components/DepartmentForm.vue";
+import ProfessionForm from "@/components/ProfessionForm.vue";
+import ProfessionList from "@/components/ProfessionList.vue";
 
 const routes = [
     {
@@ -35,7 +37,7 @@ const routes = [
     },
     {
         path: '/departments/new',
-        name: 'CreateOrganization',
+        name: 'CreateDepartment',
         component: DepartmentForm,
     },
     {
@@ -45,25 +47,22 @@ const routes = [
         props: true,
     },
     // Должности
-    /*
     {
         path: '/professions',
         name: 'Professions',
-        component: ProfessionsList,
+        component: ProfessionList,
     },
     {
         path: '/professions/new',
         name: 'CreateProfessions',
-        component: ProfessionsForm,
+        component: ProfessionForm,
     },
     {
         path: '/professions/edit/:id',
         name: 'EditProfessions',
-        component: ProfessionsForm,
+        component: ProfessionForm,
         props: true,
     },
-
-     */
 ];
 
 const router = createRouter({
