@@ -61,7 +61,7 @@ onMounted(() => {
 const submitForm = () => {
   if (isEdit.value) {
     appStore.updateDepartment(isEdit.value.id, department.value);
-    appStore.fetchDepartments();
+    appStore.stopEditing();
   } else {
     appStore.createDepartment(department.value);
   }

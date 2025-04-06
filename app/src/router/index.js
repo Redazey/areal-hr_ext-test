@@ -6,6 +6,8 @@ import DepartmentForm from "@/components/DepartmentForm.vue";
 import ProfessionForm from "@/components/ProfessionForm.vue";
 import ProfessionList from "@/components/ProfessionList.vue";
 import FileForm from "@/components/FileForm.vue";
+import EmployeeList from "@/components/EmployeeList.vue";
+import EmployeeForm from "@/components/EmployeeForm.vue";
 
 const routes = [
     {
@@ -51,7 +53,18 @@ const routes = [
         path: '/files',
         name: 'Files',
         component: FileForm,
-    }
+    },
+    // Сотрудники
+    {
+        path: '/employees',
+        name: 'Employees',
+        component: EmployeeList,
+    },
+    {
+        path: '/employees/new',
+        name: 'CreateEmployees',
+        component: EmployeeForm,
+    },
 ];
 
 const router = createRouter({
