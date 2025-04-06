@@ -1,12 +1,12 @@
 import {Column, Default, Model, Table} from 'sequelize-typescript';
 
 @Table
-export class Organization extends Model {
+export class File extends Model {
     @Column
     name: string;
 
     @Column
-    comment: string;
+    path: string;
 
     @Default(false)
     @Column

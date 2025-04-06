@@ -5,6 +5,7 @@ import DepartmentList from "@/components/DepartmentList.vue";
 import DepartmentForm from "@/components/DepartmentForm.vue";
 import ProfessionForm from "@/components/ProfessionForm.vue";
 import ProfessionList from "@/components/ProfessionList.vue";
+import FileForm from "@/components/FileForm.vue";
 
 const routes = [
     {
@@ -45,6 +46,12 @@ const routes = [
         name: 'CreateProfessions',
         component: ProfessionForm,
     },
+    // Файлы
+    {
+        path: '/files',
+        name: 'Files',
+        component: FileForm,
+    }
 ];
 
 const router = createRouter({

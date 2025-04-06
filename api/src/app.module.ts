@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { DepartmentModule } from './department/department.module';
 import { ProfessionModule } from './profession/profession.module';
 import {SequelizeModule} from "@nestjs/sequelize";
+import { FileModule } from './file/file.module';
 
 dotenv.config ({ path: `../${process.env.NODE_ENV ? process.env.NODE_ENV :''}.env` });
 
@@ -19,7 +20,7 @@ dotenv.config ({ path: `../${process.env.NODE_ENV ? process.env.NODE_ENV :''}.en
         autoLoadModels: true,
         synchronize: true,
       }),
-      OrganizationModule, DepartmentModule, ProfessionModule],
+      OrganizationModule, DepartmentModule, ProfessionModule, FileModule],
   controllers: [],
   providers: [],
 })

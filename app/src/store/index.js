@@ -15,6 +15,7 @@ export const useAppStore = defineStore('app', {
         professions: [],
         employees: [],
         users: [],
+        files: [],
     }),
 
     actions: {
@@ -27,7 +28,7 @@ export const useAppStore = defineStore('app', {
         // Функции для получения данных
         async fetchOrganizations() {
             try {
-                const response = await  api.get('/organization');
+                const response = await api.get('/organization');
                 this.organizations = response.data;
             } catch (error) {
                 console.error('Error fetching organizations:', error);
@@ -36,7 +37,7 @@ export const useAppStore = defineStore('app', {
 
         async fetchDepartments() {
             try {
-                const response = await  api.get('/department');
+                const response = await api.get('/department');
                 this.departments = response.data;
             } catch (error) {
                 console.error('Error fetching departments:', error);
@@ -45,7 +46,7 @@ export const useAppStore = defineStore('app', {
 
         async fetchProfessions() {
             try {
-                const response = await  api.get('/profession');
+                const response = await api.get('/profession');
                 this.professions = response.data;
             } catch (error) {
                 console.error('Error fetching professions:', error);
@@ -54,7 +55,7 @@ export const useAppStore = defineStore('app', {
 
         async fetchEmployees() {
             try {
-                const response = await  api.get('/employee');
+                const response = await api.get('/employee');
                 this.employees = response.data;
             } catch (error) {
                 console.error('Error fetching employees:', error);
@@ -63,17 +64,26 @@ export const useAppStore = defineStore('app', {
 
         async fetchUsers() {
             try {
-                const response = await  api.get('/user');
+                const response = await api.get('/user');
                 this.users = response.data;
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
         },
 
+        async fetchFiles() {
+            try {
+                const response = await api.get('/file');
+                this.files = response.data;
+            } catch (error) {
+                console.error('Error fetching files:', error);
+            }
+        },
+
         // CRUD операции для организаций
         async createOrganization(organization) {
             try {
-                await  api.post('/organization', organization);
+                await api.post('/organization', organization);
                 await this.fetchOrganizations();  // Обновить список организаций
             } catch (error) {
                 console.error('Error creating organization:', error);
@@ -82,7 +92,7 @@ export const useAppStore = defineStore('app', {
 
         async updateOrganization(id, organization) {
             try {
-                await  api.patch(`/organization/${id}`, organization);
+                await api.patch(`/organization/${id}`, organization);
                 await this.fetchOrganizations();  // Обновить список организаций
             } catch (error) {
                 console.error('Error updating organization:', error);
@@ -91,7 +101,7 @@ export const useAppStore = defineStore('app', {
 
         async deleteOrganization(id) {
             try {
-                await  api.delete(`/organization/${id}`);
+                await api.delete(`/organization/${id}`);
                 await this.fetchOrganizations();  // Обновить список организаций
             } catch (error) {
                 console.error('Error deleting organization:', error);
@@ -101,7 +111,7 @@ export const useAppStore = defineStore('app', {
         // CRUD операции для сотрудников
         async createEmployee(employee) {
             try {
-                await  api.post('/employee', employee);
+                await api.post('/employee', employee);
                 await this.fetchEmployees(); 
             } catch (error) {
                 console.error('Error creating employee:', error);
@@ -110,7 +120,7 @@ export const useAppStore = defineStore('app', {
 
         async updateEmployee(id, employee) {
             try {
-                await  api.patch(`/employee/${id}`, employee);
+                await api.patch(`/employee/${id}`, employee);
                 await this.fetchEmployees(); 
             } catch (error) {
                 console.error('Error updating employee:', error);
@@ -119,7 +129,7 @@ export const useAppStore = defineStore('app', {
 
         async deleteEmployee(id) {
             try {
-                await  api.delete(`/employee/${id}`);
+                await api.delete(`/employee/${id}`);
                 await this.fetchEmployees(); 
             } catch (error) {
                 console.error('Error deleting employee:', error);
@@ -129,7 +139,7 @@ export const useAppStore = defineStore('app', {
         // CRUD операции для отделов
         async createDepartment(department) {
             try {
-                await  api.post('/department', department);
+                await api.post('/department', department);
                 await this.fetchDepartments();
             } catch (error) {
                 console.error('Error creating department:', error);
@@ -138,7 +148,7 @@ export const useAppStore = defineStore('app', {
 
         async updateDepartment(id, department) {
             try {
-                await  api.patch(`/department/${id}`, department);
+                await api.patch(`/department/${id}`, department);
                 await this.fetchDepartments();
             } catch (error) {
                 console.error('Error updating department:', error);
@@ -147,7 +157,7 @@ export const useAppStore = defineStore('app', {
 
         async deleteDepartment(id) {
             try {
-                await  api.delete(`/department/${id}`);
+                await api.delete(`/department/${id}`);
                 await this.fetchDepartments();
             } catch (error) {
                 console.error('Error deleting department:', error);
@@ -157,7 +167,7 @@ export const useAppStore = defineStore('app', {
         // CRUD операции для должностей
         async createProfession(profession) {
             try {
-                await  api.post('/profession', profession);
+                await api.post('/profession', profession);
                 await this.fetchProfessions();
             } catch (error) {
                 console.error('Error creating profession:', error);
@@ -166,7 +176,7 @@ export const useAppStore = defineStore('app', {
 
         async updateProfession(id, profession) {
             try {
-                await  api.patch(`/profession/${id}`, profession);
+                await api.patch(`/profession/${id}`, profession);
                 await this.fetchProfessions();
             } catch (error) {
                 console.error('Error updating profession:', error);
@@ -175,7 +185,7 @@ export const useAppStore = defineStore('app', {
 
         async deleteProfession(id) {
             try {
-                await  api.delete(`/profession/${id}`);
+                await api.delete(`/profession/${id}`);
                 await this.fetchProfessions();
             } catch (error) {
                 console.error('Error deleting profession:', error);
@@ -185,7 +195,7 @@ export const useAppStore = defineStore('app', {
         // CRUD операции для пользователей
         async createUser(user) {
             try {
-                await  api.post('/user', user);
+                await api.post('/user', user);
                 await this.fetchUsers();
             } catch (error) {
                 console.error('Error creating user:', error);
@@ -194,7 +204,7 @@ export const useAppStore = defineStore('app', {
 
         async updateUser(id, user) {
             try {
-                await  api.put(`/user/${id}`, user);
+                await api.put(`/user/${id}`, user);
                 await this.fetchUsers();
             } catch (error) {
                 console.error('Error updating user:', error);
@@ -203,11 +213,51 @@ export const useAppStore = defineStore('app', {
 
         async deleteUser(id) {
             try {
-                await  api.delete(`/user/${id}`);
+                await api.delete(`/user/${id}`);
                 await this.fetchUsers();
             } catch (error) {
                 console.error('Error deleting user:', error);
             }
         },
+
+        // CRUD операции для файлов
+        async createFile(file) {
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                await api.post('/file', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                await this.fetchFiles();
+            } catch (error) {
+                console.error('Error creating user:', error);
+            }
+        },
+
+        async downloadFile(id, filename) {
+            try {
+                const response = await api.get(`/file/${id}`, {
+                    responseType: 'blob',
+                });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(new Blob([response.data]));
+                link.download = filename;
+                link.click();
+            } catch (error) {
+                console.error('Error downloading file:', error);
+            }
+        },
+
+        async deleteFile(id) {
+            try {
+                await api.delete(`/file/${id}`);
+                await this.fetchFiles();
+            } catch (error) {
+                console.error('Error deleting file:', error);
+            }
+        }
     },
 });

@@ -1,4 +1,3 @@
-// src/departments/department.model.ts
 import {Column, Model, Table, ForeignKey, BelongsTo, Unique, Default} from 'sequelize-typescript';
 import {Organization} from "../../organization/entities/organization.entity";
 
