@@ -10,7 +10,6 @@ import {Organization} from "../organization/entities/organization.entity";
 export class DepartmentService {
     constructor(
         @InjectModel(Department) private departmentModule: typeof Department,
-        @InjectModel(Organization) private organizationModule: typeof Organization,
     ) {
     }
 

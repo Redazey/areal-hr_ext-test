@@ -2,13 +2,10 @@ import {Module} from '@nestjs/common';
 import {DepartmentService} from './department.service';
 import {DepartmentController} from './department.controller';
 import {SequelizeModule} from '@nestjs/sequelize';
-import {Department} from "./entities/department.entity";
-import {Organization} from "../organization/entities/organization.entity";
+import {Department} from "./entities/department.entity"
 
 @Module({
-    imports: [
-        SequelizeModule.forFeature([Department]),
-        SequelizeModule.forFeature([Organization])],
+    imports: [SequelizeModule.forFeature([Department])],
     controllers: [DepartmentController],
     providers: [DepartmentService],
 })

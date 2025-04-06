@@ -6,6 +6,7 @@ import { ProfessionModule } from './profession/profession.module';
 import {SequelizeModule} from "@nestjs/sequelize";
 import { FileModule } from './file/file.module';
 import { EmployeeModule } from './employee/employee.module';
+import { OperationModule } from './operation/operation.module';
 
 dotenv.config ({ path: `../${process.env.NODE_ENV ? process.env.NODE_ENV :''}.env` });
 
@@ -21,7 +22,7 @@ dotenv.config ({ path: `../${process.env.NODE_ENV ? process.env.NODE_ENV :''}.en
         autoLoadModels: true,
         synchronize: true,
       }),
-      OrganizationModule, DepartmentModule, ProfessionModule, FileModule, EmployeeModule],
+      OrganizationModule, DepartmentModule, ProfessionModule, FileModule, EmployeeModule, OperationModule],
   controllers: [],
   providers: [],
 })

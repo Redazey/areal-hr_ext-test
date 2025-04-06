@@ -16,6 +16,7 @@ export const useAppStore = defineStore('app', {
         employees: [],
         users: [],
         files: [],
+        operations: [],
     }),
 
     actions: {
@@ -77,6 +78,15 @@ export const useAppStore = defineStore('app', {
                 this.files = response.data;
             } catch (error) {
                 console.error('Error fetching files:', error);
+            }
+        },
+
+        async fetchOperations() {
+            try {
+                const response = await api.get('/operation');
+                this.operations = response.data;
+            } catch (error) {
+                console.error('Error fetching operations:', error);
             }
         },
 
@@ -257,6 +267,25 @@ export const useAppStore = defineStore('app', {
                 await this.fetchFiles();
             } catch (error) {
                 console.error('Error deleting file:', error);
+            }
+        },
+
+        // CRUD операции для кадровых операций - ну и тавтология)
+        async createOperation(operation) {
+            try {
+                await api.post('/operation', operation);
+                await this.fetchOperations();
+            } catch (error) {
+                console.error('Error creating operation:', error);
+            }
+        },
+
+        async deleteOperation(id) {
+            try {
+                await api.delete(`/operation/${id}`);
+                await this.fetchOperations();
+            } catch (error) {
+                console.error('Error deleting operation:', error);
             }
         }
     },

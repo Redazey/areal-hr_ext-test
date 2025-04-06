@@ -8,6 +8,8 @@ import ProfessionList from "@/components/ProfessionList.vue";
 import FileForm from "@/components/FileForm.vue";
 import EmployeeList from "@/components/EmployeeList.vue";
 import EmployeeForm from "@/components/EmployeeForm.vue";
+import OperationsForm from "@/components/OperationsForm.vue";
+import OperationsList from "@/components/OperationsList.vue";
 
 const routes = [
     {
@@ -64,6 +66,17 @@ const routes = [
         path: '/employees/new',
         name: 'CreateEmployees',
         component: EmployeeForm,
+    },
+    // Кадровые операции
+    {
+        path: '/operations',
+        name: 'Operations',
+        component: OperationsList,
+    },
+    {
+        path: '/operation/new',
+        name: 'CreateOperation',
+        component: OperationsForm,
     },
 ];
 
