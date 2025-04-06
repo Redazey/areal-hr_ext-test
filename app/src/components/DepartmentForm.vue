@@ -5,7 +5,7 @@
       <!-- Выпадающий список для выбора организации -->
       <div>
         <label for="organization">Организация</label>
-        <select v-model="department.organization_id" required>
+        <select v-model="department.organizationId" required>
           <option value="" disabled>Выберите организацию</option>
           <option v-for="org in organizations" :key="org.id" :value="org.id">
             {{ org.name }}
@@ -16,7 +16,7 @@
       <!-- Выпадающий список для выбора родительского отдела -->
       <div>
         <label for="parent_id">Родительский отдел</label>
-        <select v-model="department.parent_id">
+        <select v-model="department.parentDepartmentId">
           <option value="" disabled>Выберите отдел</option>
           <option v-for="dept in departments" :key="dept.id" :value="dept.id">
             {{ dept.name }}
@@ -26,7 +26,7 @@
 
       <div>
         <label for="name">Имя отдела</label>
-        <input type="text" v-model="department.name" required />
+        <input type="text" v-model="department.name" required/>
       </div>
 
       <div>
@@ -40,33 +40,28 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAppStore } from '@/store';
+import {ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
+import {useAppStore} from '@/store';
+import {storeToRefs} from "pinia";
 
-const props = defineProps({
-  isEdit: Boolean,
-  existingDepartment: Object,
-});
-
-const department = ref(
-    props.isEdit ? { ...props.existingDepartment } : { name: '', comment: '', organization_id: '', parent_id: '' }
-);
+const department = ref({name: '', comment: '', organizationId: ''});
 
 const appStore = useAppStore();
 const router = useRouter();
+const {isEdit} = storeToRefs(appStore);
 
-const organizations = ref([]);
-const departments = ref([]);
+const {departments, organizations} = storeToRefs(appStore);
 
 onMounted(() => {
-  organizations.value = appStore.organizations;
-  departments.value = appStore.departments;
+  appStore.fetchDepartments();
+  appStore.fetchOrganizations();
 });
 
 const submitForm = () => {
-  if (props.isEdit) {
-    appStore.updateDepartment(department.value.id, department.value);
+  if (isEdit.value) {
+    appStore.updateDepartment(isEdit.value.id, department.value);
+    appStore.fetchDepartments();
   } else {
     appStore.createDepartment(department.value);
   }

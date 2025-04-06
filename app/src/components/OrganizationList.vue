@@ -15,7 +15,7 @@
         <td>{{ org.name }}</td>
         <td>{{ org.comment }}</td>
         <td>
-          <button @click="editOrganization(org.id)">Редактировать</button>
+          <button @click="editOrganization(org)">Редактировать</button>
           <button @click="deleteOrganization(org.id)">Удалить</button>
         </td>
       </tr>
@@ -25,25 +25,27 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { useAppStore } from '@/store';
-import { useRouter } from 'vue-router';
+import {onMounted} from 'vue';
+import {useAppStore} from '@/store';
+import {useRouter} from 'vue-router';
+import {storeToRefs} from "pinia";
 
 const appStore = useAppStore();
+const {organizations} = storeToRefs(appStore);
 const router = useRouter();
 
 onMounted(() => {
+  appStore.stopEditing();
   appStore.fetchOrganizations();
 });
-
-const organizations = appStore.organizations;
 
 const addOrganization = () => {
   router.push('/organizations/new');
 };
 
-const editOrganization = (id) => {
-  router.push(`/organizations/edit/${id}`);
+const editOrganization = (organization) => {
+  appStore.setEditing(organization);
+  router.push(`/organizations/new`);
 };
 
 const deleteOrganization = (id) => {

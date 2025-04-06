@@ -16,23 +16,21 @@
 </template>
 
 <script setup>
-import {ref, defineProps} from 'vue';
+import {ref} from 'vue';
 import {useRouter} from "vue-router";
 import {useAppStore} from '@/store';
+import {storeToRefs} from "pinia";
 
-const props = defineProps({
-  isEdit: Boolean,
-  existingOrganization: Object,
-});
-
-const organization = ref(props.isEdit ? {...props.existingOrganization} : {name: '', comment: ''});
+const organization = ref({name: '', comment: ''});
 
 const appStore = useAppStore();
 const router = useRouter();
+const {isEdit} = storeToRefs(appStore);
 
 const submitForm = () => {
-  if (props.isEdit) {
-    appStore.updateOrganization(organization.value.id, organization.value);
+  if (isEdit.value) {
+    appStore.updateOrganization(isEdit.value.id, organization.value);
+    appStore.stopEditing();
   } else {
     appStore.createOrganization(organization.value);
   }

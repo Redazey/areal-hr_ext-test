@@ -23,12 +23,6 @@ const routes = [
         name: 'CreateOrganization',
         component: OrganizationForm,
     },
-    {
-        path: '/organizations/edit/:id',
-        name: 'EditOrganization',
-        component: OrganizationForm,
-        props: true,
-    },
     // Отделы
     {
         path: '/departments',
@@ -40,12 +34,6 @@ const routes = [
         name: 'CreateDepartment',
         component: DepartmentForm,
     },
-    {
-        path: '/departments/edit/:id',
-        name: 'EditDepartment',
-        component: DepartmentForm,
-        props: true,
-    },
     // Должности
     {
         path: '/professions',
@@ -56,12 +44,6 @@ const routes = [
         path: '/professions/new',
         name: 'CreateProfessions',
         component: ProfessionForm,
-    },
-    {
-        path: '/professions/edit/:id',
-        name: 'EditProfessions',
-        component: ProfessionForm,
-        props: true,
     },
 ];
 
