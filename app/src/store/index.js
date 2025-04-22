@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import {ref} from "vue";
 
 const api = axios.create({
     baseURL: 'http://localhost:3001/',

@@ -1,15 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import OrganizationList from '@/components/OrganizationList.vue';
 import OrganizationForm from '@/components/OrganizationForm.vue';
-import DepartmentList from "@/components/DepartmentList.vue";
 import DepartmentForm from "@/components/DepartmentForm.vue";
 import ProfessionForm from "@/components/ProfessionForm.vue";
-import ProfessionList from "@/components/ProfessionList.vue";
 import FileForm from "@/components/FileForm.vue";
-import EmployeeList from "@/components/EmployeeList.vue";
 import EmployeeForm from "@/components/EmployeeForm.vue";
 import OperationsForm from "@/components/OperationsForm.vue";
-import OperationsList from "@/components/OperationsList.vue";
+import UniqueList from "@/components/UniqueList.vue";
+import {useAppStore} from "@/store/index.js";
+import {storeToRefs} from "pinia";
 
 const routes = [
     {
@@ -21,7 +20,31 @@ const routes = [
     {
         path: '/organizations',
         name: 'Organizations',
-        component: OrganizationList,
+        component: UniqueList,
+        props: route => {
+            const appStore = useAppStore();
+            const {organizations} = storeToRefs(appStore);
+            return {
+                header: "организаций",
+                rawData: organizations,
+                editAction: (item) => {
+                    appStore.setEditing(item)
+                    router.push(`/organizations/new`)
+                },
+                addAction: () => {
+                    router.push(`/organizations/new`)
+                },
+                deleteAction: (id) => {
+                    appStore.deleteOrganization(id)
+                },
+            }
+        },
+        beforeEnter: async (to, from, next) => {
+            const appStore = useAppStore();
+            await appStore.fetchOrganizations();
+
+            next()
+        }
     },
     {
         path: '/organizations/new',
@@ -32,7 +55,31 @@ const routes = [
     {
         path: '/departments',
         name: 'Departments',
-        component: DepartmentList,
+        component: UniqueList,
+        props: route => {
+            const appStore = useAppStore();
+            const {departments} = storeToRefs(appStore);
+            return {
+                header: "отделов",
+                rawData: departments,
+                editAction: (item) => {
+                    appStore.setEditing(item)
+                    router.push(`/departments/new`)
+                },
+                addAction: () => {
+                    router.push(`/departments/new`)
+                },
+                deleteAction: (id) => {
+                    appStore.deleteDepartment(id)
+                },
+            }
+        },
+        beforeEnter: async (to, from, next) => {
+            const appStore = useAppStore();
+            await appStore.fetchOrganizations();
+
+            next()
+        }
     },
     {
         path: '/departments/new',
@@ -43,7 +90,31 @@ const routes = [
     {
         path: '/professions',
         name: 'Professions',
-        component: ProfessionList,
+        component: UniqueList,
+        props: route => {
+            const appStore = useAppStore();
+            const {professions} = storeToRefs(appStore);
+            return {
+                header: "должностей",
+                rawData: professions,
+                editAction: (item) => {
+                    appStore.setEditing(item)
+                    router.push(`/professions/new`)
+                },
+                addAction: () => {
+                    router.push(`/professions/new`)
+                },
+                deleteAction: (id) => {
+                    appStore.deleteProfession(id)
+                },
+            }
+        },
+        beforeEnter: async (to, from, next) => {
+            const appStore = useAppStore();
+            await appStore.fetchOrganizations();
+
+            next()
+        }
     },
     {
         path: '/professions/new',
@@ -60,7 +131,31 @@ const routes = [
     {
         path: '/employees',
         name: 'Employees',
-        component: EmployeeList,
+        component: UniqueList,
+        props: route => {
+            const appStore = useAppStore();
+            const {employees} = storeToRefs(appStore);
+            return {
+                header: "сотрудников",
+                rawData: employees,
+                editAction: (item) => {
+                    appStore.setEditing(item)
+                    router.push(`/employees/new`)
+                },
+                addAction: () => {
+                    router.push(`/employees/new`)
+                },
+                deleteAction: (id) => {
+                    appStore.deleteEmployee(id)
+                },
+            }
+        },
+        beforeEnter: async (to, from, next) => {
+            const appStore = useAppStore();
+            await appStore.fetchEmployees();
+
+            next()
+        }
     },
     {
         path: '/employees/new',
@@ -71,7 +166,31 @@ const routes = [
     {
         path: '/operations',
         name: 'Operations',
-        component: OperationsList,
+        component: UniqueList,
+        props: route => {
+            const appStore = useAppStore();
+            const {operations} = storeToRefs(appStore);
+            return {
+                header: "организаций",
+                rawData: operations,
+                editAction: (item) => {
+                    appStore.setEditing(item)
+                    router.push(`/operations/new`)
+                },
+                addAction: () => {
+                    router.push(`/operations/new`)
+                },
+                deleteAction: (id) => {
+                    appStore.deleteOperation(id)
+                },
+            }
+        },
+        beforeEnter: async (to, from, next) => {
+            const appStore = useAppStore();
+            await appStore.fetchOperations();
+
+            next()
+        }
     },
     {
         path: '/operation/new',
@@ -84,5 +203,9 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
 });
+
+router.beforeEach = async (to, from, next) => {
+    next();
+}
 
 export default router;
