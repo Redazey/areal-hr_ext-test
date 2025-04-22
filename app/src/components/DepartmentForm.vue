@@ -26,7 +26,7 @@
 
       <div>
         <label for="name">Имя отдела</label>
-        <input type="text" v-model="department.name" required/>
+        <input type="text" v-model="department.name" required />
       </div>
 
       <div>
@@ -40,18 +40,18 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue';
-import {useRouter} from 'vue-router';
-import {useAppStore} from '@/store';
-import {storeToRefs} from "pinia";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAppStore } from '@/store';
+import { storeToRefs } from 'pinia';
 
-const department = ref({name: '', comment: '', organizationId: ''});
+const department = ref({ name: '', comment: '', organizationId: '' });
 
 const appStore = useAppStore();
 const router = useRouter();
-const {isEdit} = storeToRefs(appStore);
+const { isEdit } = storeToRefs(appStore);
 
-const {departments, organizations} = storeToRefs(appStore);
+const { departments, organizations } = storeToRefs(appStore);
 
 onMounted(() => {
   appStore.fetchDepartments();

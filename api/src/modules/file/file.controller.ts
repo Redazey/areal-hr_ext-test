@@ -45,7 +45,7 @@ export class FileController {
   async findOne(@Param('id') id: string, @Res() res: Response) {
     try {
       const file = await this.fileService.findOne(+id);
-      const rootDir = path.join(__dirname, '../../');
+      const rootDir = path.join(__dirname, '../../../');
       return res.sendFile(file.path, { root: rootDir });
     } catch (error) {
       console.error(error);

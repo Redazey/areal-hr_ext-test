@@ -46,17 +46,22 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue';
-import {useRouter} from 'vue-router';
-import {useAppStore} from '@/store';
-import {storeToRefs} from "pinia";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAppStore } from '@/store';
+import { storeToRefs } from 'pinia';
 
-const operation = ref({employeeId: '', professionId: '', departmentId: '', salary: ''});
+const operation = ref({
+  employeeId: '',
+  professionId: '',
+  departmentId: '',
+  salary: '',
+});
 
 const appStore = useAppStore();
 const router = useRouter();
 
-const {departments, professions, employees} = storeToRefs(appStore);
+const { departments, professions, employees } = storeToRefs(appStore);
 
 onMounted(() => {
   appStore.fetchDepartments();

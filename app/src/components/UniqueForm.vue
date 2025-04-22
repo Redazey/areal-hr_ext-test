@@ -1,11 +1,31 @@
-<script setup>
-
-</script>
-
 <template>
+  <form @submit.prevent="onSubmit(localModel)">
+    <div v-for="(field, index) in fields" :key="index">
+      <label :for="field.label">{{ field.label }}</label>
+      <input
+        :type="field.type"
+        v-model="localModel[field.model]"
+        :required="field.required"
+        @change="field.onChange"
+      />
+    </div>
 
+    <button type="submit">{{ submitText }}</button>
+  </form>
 </template>
 
-<style scoped>
+<script setup>
+import { defineProps, computed, ref } from 'vue';
 
-</style>
+const props = defineProps({
+  model: Object,
+  fields: Array,
+  onSubmit: Function,
+});
+
+const localModel = ref({...props.model});
+
+const submitText = computed(() => {
+  return props.model.id ? "Сохранить" : "Добавить";
+});
+</script>

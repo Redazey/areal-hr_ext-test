@@ -14,16 +14,37 @@ export class DepartmentService {
     return this.departmentModule.create(createDepartmentDto);
   }
 
-  findAll() {
-    return this.departmentModule.findAll({
+  async findAll() {
+    const departments = await this.departmentModule.findAll({
       include: [
         {
           model: Organization,
+          attributes: ['name'],
+        },
+        {
+          model: Department,
+          attributes: ['name'],
         },
       ],
       where: {
         [Op.or]: [{ deleted_at: null }],
       },
+    });
+
+    // Преобразуем результат, чтобы вернуть данные в нужном формате
+    return departments.map((department) => {
+      const org = department.organization ? department.organization.name : null;
+      const parentDepartment = department.parent_department
+        ? department.parent_department.name
+        : null;
+
+      return {
+        id: department.id,
+        name: department.name,
+        comment: department.comment,
+        organization_name: org,
+        parent_department_name: parentDepartment,
+      };
     });
   }
 

@@ -12,6 +12,11 @@ import { Department } from '../../department/entities/department.entity';
 
 @Table({
   timestamps: false,
+  defaultScope: {
+    attributes: {
+      exclude: ['created_at', 'updated_at', 'deleted_at'],
+    },
+  },
 })
 export class Operation extends Model {
   @ForeignKey(() => Employee)

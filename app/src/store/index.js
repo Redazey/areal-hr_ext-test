@@ -99,9 +99,9 @@ export const useAppStore = defineStore('app', {
             }
         },
 
-        async updateOrganization(id, organization) {
+        async updateOrganization(organization) {
             try {
-                await api.patch(`/organization/${id}`, organization);
+                await api.patch(`/organization/${organization.id}`, organization);
                 await this.fetchOrganizations();  // Обновить список организаций
             } catch (error) {
                 console.error('Error updating organization:', error);
@@ -127,9 +127,9 @@ export const useAppStore = defineStore('app', {
             }
         },
 
-        async updateEmployee(id, employee) {
+        async updateEmployee(employee) {
             try {
-                await api.patch(`/employee/${id}`, employee);
+                await api.patch(`/employee/${employee.id}`, employee);
                 await this.fetchEmployees(); 
             } catch (error) {
                 console.error('Error updating employee:', error);
@@ -155,9 +155,9 @@ export const useAppStore = defineStore('app', {
             }
         },
 
-        async updateDepartment(id, department) {
+        async updateDepartment(department) {
             try {
-                await api.patch(`/department/${id}`, department);
+                await api.patch(`/department/${department.id}`, department);
                 await this.fetchDepartments();
             } catch (error) {
                 console.error('Error updating department:', error);
@@ -183,9 +183,9 @@ export const useAppStore = defineStore('app', {
             }
         },
 
-        async updateProfession(id, profession) {
+        async updateProfession(profession) {
             try {
-                await api.patch(`/profession/${id}`, profession);
+                await api.patch(`/profession/${profession.id}`, profession);
                 await this.fetchProfessions();
             } catch (error) {
                 console.error('Error updating profession:', error);
