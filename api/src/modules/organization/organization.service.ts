@@ -31,7 +31,7 @@ export class OrganizationService {
 
   remove(id: number) {
     return this.organizationModule.update(
-      { isDeleted: true },
+      { deleted_at: new Date() },
       {
         where: {
           id: id,

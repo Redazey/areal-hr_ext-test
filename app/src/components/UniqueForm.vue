@@ -1,9 +1,9 @@
 <template>
   <form @submit.prevent="onSubmit(localModel)">
     <div v-for="(field, index) in fields" :key="index">
-      <label :for="field.label">{{ field.label }}</label>
       <input
         :type="field.type"
+        :placeholder="field.label"
         v-model="localModel[field.model]"
         :required="field.required"
         @change="field.onChange"
@@ -23,9 +23,9 @@ const props = defineProps({
   onSubmit: Function,
 });
 
-const localModel = ref({...props.model});
+const localModel = ref({ ...props.model });
 
 const submitText = computed(() => {
-  return props.model.id ? "Сохранить" : "Добавить";
+  return props.model.id ? 'Сохранить' : 'Добавить';
 });
 </script>

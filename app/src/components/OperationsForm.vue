@@ -3,8 +3,8 @@
     <h2>Совершить операцию</h2>
     <form @submit.prevent="submitForm">
       <!-- Выпадающий список для выбора сотрудника -->
-      <div>
-        <label for="employee">Сотрудник</label>
+      <div class="form-group">
+        <label>Сотрудник</label>
         <select v-model="operation.employeeId" required>
           <option value="" disabled>Выберите сотрудника</option>
           <option v-for="emp in employees" :key="emp.id" :value="emp.id">
@@ -14,8 +14,8 @@
       </div>
 
       <!-- Выпадающий список для выбора должности -->
-      <div>
-        <label for="profession">Должность</label>
+      <div class="form-group">
+        <label>Должность</label>
         <select v-model="operation.professionId" required>
           <option value="" disabled>Выберите должность</option>
           <option v-for="prof in professions" :key="prof.id" :value="prof.id">
@@ -25,8 +25,8 @@
       </div>
 
       <!-- Выпадающий список для выбора отдела -->
-      <div>
-        <label for="department">Отдел</label>
+      <div class="form-group">
+        <label>Отдел</label>
         <select v-model="operation.departmentId">
           <option value="" disabled>Выберите отдел</option>
           <option v-for="dep in departments" :key="dep.id" :value="dep.id">
@@ -35,10 +35,7 @@
         </select>
       </div>
 
-      <div>
-        <label for="salary">Зарплата</label>
-        <textarea v-model="operation.salary"></textarea>
-      </div>
+      <textarea placeholder="Зарплата" v-model="operation.salary" />
 
       <button type="submit">Подтвердить</button>
     </form>

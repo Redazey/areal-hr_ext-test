@@ -3,8 +3,8 @@
     <h2>{{ isEdit ? 'Редактировать' : 'Создать' }} отдел</h2>
     <form @submit.prevent="submitForm">
       <!-- Выпадающий список для выбора организации -->
-      <div>
-        <label for="organization">Организация</label>
+      <div class="form-group">
+        <label>Организация</label>
         <select v-model="department.organizationId" required>
           <option value="" disabled>Выберите организацию</option>
           <option v-for="org in organizations" :key="org.id" :value="org.id">
@@ -14,8 +14,8 @@
       </div>
 
       <!-- Выпадающий список для выбора родительского отдела -->
-      <div>
-        <label for="parent_id">Родительский отдел</label>
+      <div class="form-group">
+        <label>Родительский отдел</label>
         <select v-model="department.parentDepartmentId">
           <option value="" disabled>Выберите отдел</option>
           <option v-for="dept in departments" :key="dept.id" :value="dept.id">
@@ -24,15 +24,17 @@
         </select>
       </div>
 
-      <div>
-        <label for="name">Имя отдела</label>
-        <input type="text" v-model="department.name" required />
-      </div>
+      <input
+        placeholder="Название"
+        type="text"
+        v-model="department.name"
+        required
+      />
 
-      <div>
-        <label for="comment">Комментарий</label>
-        <textarea v-model="department.comment"></textarea>
-      </div>
+      <textarea
+        placeholder="Комментарий"
+        v-model="department.comment"
+      ></textarea>
 
       <button type="submit">{{ isEdit ? 'Обновить' : 'Создать' }}</button>
     </form>

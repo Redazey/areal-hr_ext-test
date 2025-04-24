@@ -7,6 +7,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { FileModule } from './modules/file/file.module';
 import { EmployeeModule } from './modules/employee/employee.module';
 import { OperationModule } from './modules/operation/operation.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
+import { RolesModule } from './modules/roles/roles.module';
 
 dotenv.config({
   path: `../${process.env.NODE_ENV ? process.env.NODE_ENV : ''}.env`,
@@ -30,6 +33,9 @@ dotenv.config({
     FileModule,
     EmployeeModule,
     OperationModule,
+    AuthModule,
+    UserModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [],

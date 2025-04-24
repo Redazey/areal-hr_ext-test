@@ -29,7 +29,7 @@ export class FileService {
 
   remove(id: number) {
     return this.fileModule.update(
-      { deleted_at: null },
+      { deleted_at: new Date() },
       {
         where: {
           id: id,

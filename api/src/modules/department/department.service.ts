@@ -58,7 +58,7 @@ export class DepartmentService {
 
   remove(id: number) {
     return this.departmentModule.update(
-      { isDeleted: true },
+      { deleted_at: new Date() },
       {
         where: {
           id: id,

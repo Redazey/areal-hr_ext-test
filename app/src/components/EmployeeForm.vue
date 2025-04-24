@@ -2,34 +2,44 @@
   <div>
     <h2>{{ isEdit ? 'Редактировать' : 'Добавить' }} сотрудника</h2>
     <form @submit.prevent="submitForm">
-      <div>
-        <label for="last_name">Фамилия</label>
-        <input type="text" v-model="employee.last_name" required />
+      <input
+        placeholder="Имя"
+        type="text"
+        v-model="employee.last_name"
+        required
+      />
+      <input
+        placeholder="Фамилия"
+        type="text"
+        v-model="employee.first_name"
+        required
+      />
+      <input
+        placeholder="Отчество"
+        type="text"
+        v-model="employee.patronymic"
+        required
+      />
+      <div class="form-group">
+        <label>День рождения</label>
+        <input placeholder="Имя" type="date" v-model="employee.dob" required />
       </div>
-      <div>
-        <label for="first_name">Имя</label>
-        <input type="text" v-model="employee.first_name" required />
-      </div>
-      <div>
-        <label for="patronymic">Отчество</label>
-        <input type="text" v-model="employee.patronymic" required />
-      </div>
-      <div>
-        <label for="date">Дата рождения</label>
-        <input type="date" v-model="employee.dob" required />
-      </div>
-      <div>
-        <label for="passport">Паспортные данные</label>
-        <input type="text" v-model="employee.passport" required />
-      </div>
-      <div>
-        <label for="registration_address">Адрес регистрации</label>
-        <input type="text" v-model="employee.registration_address" required />
-      </div>
+      <input
+        placeholder="Паспорт"
+        type="text"
+        v-model="employee.passport"
+        required
+      />
+      <input
+        placeholder="Адрес"
+        type="text"
+        v-model="employee.registration_address"
+        required
+      />
 
       <!-- Выпадающий список для выбора файла -->
-      <div>
-        <label for="passport_scan">Файлы</label>
+      <div class="form-group">
+        <label>Файлы</label>
         <select v-model="employee.passport_scan">
           <option value="" disabled>Выберите файл</option>
           <option v-for="file in files" :key="file.id" :value="file.id">

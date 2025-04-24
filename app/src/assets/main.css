@@ -9,7 +9,16 @@ body {
   font-weight: normal;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 form {
+  margin: auto;
   width: 500px;
   background: #282828;
   padding: 20px;
@@ -23,29 +32,16 @@ form div {
   justify-content: space-between;
 }
 
-input[type="text"],
-textarea,
-select{
-  width: 50%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #333;
-  background-color: #f9f9f9;
-}
-
+input,
 textarea {
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   resize: vertical;
-  box-sizing: border-box;
 }
 
-input[type="text"]:focus,
-textarea:focus {
-  border-color: #4CAF50;
-  outline: none;
-}
 button {
   background: hsla(160, 100%, 37%, 1);
   color: white;

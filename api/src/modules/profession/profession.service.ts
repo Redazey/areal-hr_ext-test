@@ -31,7 +31,7 @@ export class ProfessionService {
 
   remove(id: number) {
     return this.professionModule.update(
-      { isDeleted: true },
+      { deleted_at: new Date() },
       {
         where: {
           id: id,

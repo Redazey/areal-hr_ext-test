@@ -6,6 +6,8 @@ import UniqueList from '@/components/UniqueList.vue';
 import { useAppStore } from '@/store/index.js';
 import { storeToRefs } from 'pinia';
 import UniqueForm from '@/components/UniqueForm.vue';
+import UserForm from "@/components/UserForm.vue";
+import AuthForm from "@/components/AuthForm.vue";
 
 const routes = [
   {
@@ -36,6 +38,11 @@ const routes = [
 
       next();
     },
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: AuthForm,
   },
   // Организации
   {
@@ -300,7 +307,7 @@ const routes = [
       const appStore = useAppStore();
       const { operations } = storeToRefs(appStore);
       return {
-        header: 'организаций',
+        header: 'операций',
         rawData: operations,
         editAction: (item) => {
           appStore.setEditing(item);
@@ -322,9 +329,44 @@ const routes = [
     },
   },
   {
-    path: '/operation/new',
+    path: '/operations/new',
     name: 'CreateOperation',
     component: OperationsForm,
+  },
+  // Пользователи
+  {
+    path: '/users',
+    name: 'Users',
+    component: UniqueList,
+    props: (route) => {
+      const appStore = useAppStore();
+      const { users } = storeToRefs(appStore);
+      return {
+        header: 'пользователей',
+        rawData: users,
+        editAction: (item) => {
+          appStore.setEditing(item);
+          router.push(`/user/new`);
+        },
+        addAction: () => {
+          router.push(`/user/new`);
+        },
+        deleteAction: (id) => {
+          appStore.deleteUser(id);
+        },
+      };
+    },
+    beforeEnter: async (to, from, next) => {
+      const appStore = useAppStore();
+      await appStore.fetchUsers();
+
+      next();
+    },
+  },
+  {
+    path: '/users/new',
+    name: 'CreateUser',
+    component: UserForm,
   },
 ];
 
@@ -333,8 +375,16 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach = async (to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  const appStore = useAppStore()
+  await appStore.checkAuthenticated();
+  const { user } = storeToRefs(appStore);
+  console.log(user.value);
+  if (user.value == null && to.path != "/auth") {
+    router.push("/auth")
+  }
+
   next();
-};
+});
 
 export default router;

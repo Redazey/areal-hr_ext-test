@@ -26,7 +26,7 @@ export class OperationService {
 
   remove(id: number) {
     return this.operationModule.update(
-      { deleted_at: null },
+      { deleted_at: new Date() },
       {
         where: { id: id },
       },

@@ -33,7 +33,7 @@ export class EmployeeService {
 
   remove(id: number) {
     return this.employeeModule.update(
-      { isDeleted: true },
+      { deleted_at: new Date() },
       {
         where: { id: id },
       },
