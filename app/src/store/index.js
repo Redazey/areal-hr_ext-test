@@ -3,7 +3,7 @@ import axios from 'axios';
 import router from "@/router/index.js";
 
 const api = axios.create({
-  baseURL: 'http://localhost:3001/',
+  baseURL: import.meta.env.VITE_API_HOST || 'https://localhost:3001/',
   timeout: 5000,
   withCredentials: true,
 });
@@ -42,7 +42,7 @@ export const useAppStore = defineStore('app', {
     async checkAuthenticated() {
       try {
         const { data } = await api.get('/auth/me');
-        this.user.value = data;
+        this.user = data;
       } catch (error) {
         console.error('Not authenticated:', error);
       }

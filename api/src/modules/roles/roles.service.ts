@@ -8,10 +8,6 @@ export class RolesService {
   constructor(@InjectModel(Role) private roleModule: typeof Role) {}
 
   findAll() {
-    return this.roleModule.findAll({
-      where: {
-        [Op.or]: [{ deleted_at: null }],
-      },
-    });
+    return this.roleModule.findAll();
   }
 }

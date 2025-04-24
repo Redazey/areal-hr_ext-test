@@ -4,18 +4,18 @@ import { AuthController } from './auth.controller';
 import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { APP_GUARD } from '@nestjs/core';
-import { LocalAuthGuard } from './local-auth.guard';
 import { LocalStrategy } from './local.strategy';
 import { PassportConfig } from './passport.config';
+import { AuthGuard } from './local-auth.guard';
 
 @Module({
-  imports: [UserModule, PassportModule],
+  imports: [UserModule, PassportModule.register({ session: true })],
   controllers: [AuthController],
   providers: [
     AuthService,
     {
       provide: APP_GUARD,
-      useClass: LocalAuthGuard,
+      useClass: AuthGuard,
     },
     LocalStrategy,
     PassportConfig,

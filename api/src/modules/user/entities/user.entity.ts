@@ -37,7 +37,7 @@ export class User extends Model {
   role_id: number;
 
   @BelongsTo(() => Role)
-  file: File;
+  role: Role;
 
   @Default(null)
   @Column

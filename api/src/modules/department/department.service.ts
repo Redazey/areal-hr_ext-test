@@ -33,10 +33,12 @@ export class DepartmentService {
 
     // Преобразуем результат, чтобы вернуть данные в нужном формате
     return departments.map((department) => {
-      const org = department.organization ? department.organization.name : null;
+      const org = department.organization
+        ? department.organization.name
+        : 'отсутствует';
       const parentDepartment = department.parent_department
         ? department.parent_department.name
-        : null;
+        : 'отсутствует';
 
       return {
         id: department.id,

@@ -346,10 +346,10 @@ const routes = [
         rawData: users,
         editAction: (item) => {
           appStore.setEditing(item);
-          router.push(`/user/new`);
+          router.push(`/users/new`);
         },
         addAction: () => {
-          router.push(`/user/new`);
+          router.push(`/users/new`);
         },
         deleteAction: (id) => {
           appStore.deleteUser(id);

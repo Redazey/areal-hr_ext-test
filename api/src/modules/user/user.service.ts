@@ -28,8 +28,8 @@ export class UserService {
     return this.userModule.findByPk(userId);
   }
 
-  findAll() {
-    return this.userModule.findAll({
+  async findAll() {
+    const users = await this.userModule.findAll({
       include: [
         {
           model: Role,
@@ -38,6 +38,22 @@ export class UserService {
       where: {
         [Op.or]: [{ deleted_at: null }],
       },
+    });
+
+    return users.map((user) => {
+      const patronymic = user.patronymic ? user.patronymic : 'отсутствует';
+      const role = user.role.name
+        ? user.role.name
+        : null;
+
+      return {
+        id: user.id,
+        last_name: user.last_name,
+        first_name: user.first_name,
+        patronymic: patronymic,
+        email: user.email,
+        role: role,
+      };
     });
   }
 
