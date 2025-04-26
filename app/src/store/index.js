@@ -20,6 +20,7 @@ export const useAppStore = defineStore('app', {
     roles: [],
     files: [],
     operations: [],
+    changes: []
   }),
 
   actions: {
@@ -118,6 +119,15 @@ export const useAppStore = defineStore('app', {
         this.operations = response.data;
       } catch (error) {
         console.error('Error fetching operations:', error);
+      }
+    },
+
+    async fetchChanges() {
+      try {
+        const response = await api.get('/change');
+        this.changes = response.data;
+      } catch (error) {
+        console.error('Error fetching changes:', error);
       }
     },
 

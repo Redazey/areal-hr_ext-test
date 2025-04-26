@@ -13,7 +13,6 @@ export class PassportConfig {
 
     passport.deserializeUser(async (email: string, done) => {
       try {
-        console.log('[Deserialize]', email);
         const user = await this.userService.findOne(email);
         done(null, user);
       } catch (error) {

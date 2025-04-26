@@ -14,7 +14,6 @@ export class AuthController {
           console.error('[AuthController] req.login error:', err);
           reject(err);
         } else {
-          console.log('[AuthController] login success');
           resolve(req.user);
         }
       });

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { OrganizationModule } from './modules/organization/organization.module';
 import * as dotenv from 'dotenv';
 import { DepartmentModule } from './modules/department/department.module';
@@ -10,6 +10,8 @@ import { OperationModule } from './modules/operation/operation.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { RolesModule } from './modules/roles/roles.module';
+import { ChangeModule } from './modules/change/change.module';
+import { ChangeLoggerMiddleware } from './common/middlewares/change-logger.middleware';
 
 dotenv.config({
   path: `../${process.env.NODE_ENV ? process.env.NODE_ENV : ''}.env`,
@@ -36,8 +38,22 @@ dotenv.config({
     AuthModule,
     UserModule,
     RolesModule,
+    ChangeModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ChangeLoggerMiddleware).exclude('/auth/login').forRoutes(
+      {
+        path: '*',
+        method: RequestMethod.POST,
+      },
+      {
+        path: '*',
+        method: RequestMethod.PATCH,
+      },
+    );
+  }
+}

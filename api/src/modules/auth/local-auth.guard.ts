@@ -15,7 +15,6 @@ export class AuthGuard implements CanActivate {
     }
 
     const req = context.switchToHttp().getRequest();
-    console.log('[isAuthenticated]', req.isAuthenticated?.());
     return req.isAuthenticated?.();
   }
 }

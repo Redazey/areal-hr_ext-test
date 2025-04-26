@@ -42,9 +42,7 @@ export class UserService {
 
     return users.map((user) => {
       const patronymic = user.patronymic ? user.patronymic : 'отсутствует';
-      const role = user.role.name
-        ? user.role.name
-        : null;
+      const role = user.role.name ? user.role.name : null;
 
       return {
         id: user.id,

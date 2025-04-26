@@ -6,8 +6,8 @@ import UniqueList from '@/components/UniqueList.vue';
 import { useAppStore } from '@/store/index.js';
 import { storeToRefs } from 'pinia';
 import UniqueForm from '@/components/UniqueForm.vue';
-import UserForm from "@/components/UserForm.vue";
-import AuthForm from "@/components/AuthForm.vue";
+import UserForm from '@/components/UserForm.vue';
+import AuthForm from '@/components/AuthForm.vue';
 
 const routes = [
   {
@@ -209,7 +209,7 @@ const routes = [
           }
         },
       };
-    }
+    },
   },
   // Файлы
   {
@@ -232,7 +232,7 @@ const routes = [
           appStore.deleteFile(id);
         },
       };
-    }
+    },
   },
   {
     path: '/files/new',
@@ -251,7 +251,7 @@ const routes = [
             onChange: (e) => {
               const file = e.target.files[0];
               appStore.createFile(file);
-            }
+            },
           },
         ],
         model: isEdit.value ? isEdit.value : { filename: '' },
@@ -261,7 +261,7 @@ const routes = [
           }
         },
       };
-    }
+    },
   },
   // Сотрудники
   {
@@ -368,6 +368,36 @@ const routes = [
     name: 'CreateUser',
     component: UserForm,
   },
+
+  // История изменений
+  {
+    path: '/changes',
+    name: 'Changes',
+    component: UniqueList,
+    props: (route) => {
+      const appStore = useAppStore();
+      const { changes } = storeToRefs(appStore);
+      return {
+        header: 'изменений',
+        rawData: changes,
+        editAction: () => {
+          alert('Недоступно для этой таблицы');
+        },
+        addAction: () => {
+          alert('Недоступно для этой таблицы, все изменения вносятся автоматически');
+        },
+        deleteAction: () => {
+          alert('Недоступно для этой таблицы');
+        },
+      };
+    },
+    beforeEnter: async (to, from, next) => {
+      const appStore = useAppStore();
+      await appStore.fetchChanges();
+
+      next();
+    },
+  },
 ];
 
 const router = createRouter({
@@ -376,12 +406,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const appStore = useAppStore()
+  const appStore = useAppStore();
   await appStore.checkAuthenticated();
   const { user } = storeToRefs(appStore);
   console.log(user.value);
-  if (user.value == null && to.path != "/auth") {
-    router.push("/auth")
+  if (user.value == null && to.path != '/auth') {
+    router.push('/auth');
   }
 
   next();
