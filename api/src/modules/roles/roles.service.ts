@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Role } from './entities/role.entity';
-import { Op } from 'sequelize';
 import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
@@ -9,5 +8,13 @@ export class RolesService {
 
   findAll() {
     return this.roleModule.findAll();
+  }
+
+  findOneByName(name: string) {
+    return this.roleModule.findOne({
+      where: {
+        name: name,
+      },
+    });
   }
 }

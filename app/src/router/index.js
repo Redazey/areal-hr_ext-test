@@ -8,6 +8,7 @@ import { storeToRefs } from 'pinia';
 import UniqueForm from '@/components/UniqueForm.vue';
 import UserForm from '@/components/UserForm.vue';
 import AuthForm from '@/components/AuthForm.vue';
+import RegistrationForm from '@/components/RegistrationForm.vue';
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: '/auth',
     name: 'Auth',
     component: AuthForm,
+  },
+  {
+    path: '/registration',
+    name: 'Registration',
+    component: RegistrationForm,
   },
   // Организации
   {
@@ -384,7 +390,9 @@ const routes = [
           alert('Недоступно для этой таблицы');
         },
         addAction: () => {
-          alert('Недоступно для этой таблицы, все изменения вносятся автоматически');
+          alert(
+            'Недоступно для этой таблицы, все изменения вносятся автоматически',
+          );
         },
         deleteAction: () => {
           alert('Недоступно для этой таблицы');
@@ -410,7 +418,7 @@ router.beforeEach(async (to, from, next) => {
   await appStore.checkAuthenticated();
   const { user } = storeToRefs(appStore);
   console.log(user.value);
-  if (user.value == null && to.path != '/auth') {
+  if (user.value == null && to.path != '/auth' && to.path != '/registration') {
     router.push('/auth');
   }
 

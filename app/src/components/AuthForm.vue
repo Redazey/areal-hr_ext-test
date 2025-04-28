@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="sendForm" class="form">
+  <form @submit.prevent="" class="form">
     <h1>Авторизация</h1>
     <input
       v-model="auth.email"
@@ -17,13 +17,17 @@
       placeholder="password"
     />
 
-    <button type="submit" :disabled="!isFormValid">Войти</button>
+    <div class="form-group">
+      <button @click="sendForm" :disabled="!isFormValid">Войти</button>
+      <RouterLink to="/registration">Нет аккаунта?</RouterLink>
+    </div>
   </form>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { useAppStore } from '@/store/index.js';
+import router from "@/router/index.js";
 
 const appStore = useAppStore();
 

@@ -39,6 +39,14 @@ export const useAppStore = defineStore('app', {
         console.error('Error while auth:', error);
       }
     },
+    async registration(credentials) {
+      try {
+        await api.post('/auth/registration', credentials);
+        router.push('/auth');
+      } catch (error) {
+        console.error('Error while registration:', error);
+      }
+    },
 
     async checkAuthenticated() {
       try {

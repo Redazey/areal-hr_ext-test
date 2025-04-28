@@ -7,9 +7,14 @@ import { APP_GUARD } from '@nestjs/core';
 import { LocalStrategy } from './local.strategy';
 import { PassportConfig } from './passport.config';
 import { AuthGuard } from './local-auth.guard';
+import { RolesModule } from '../roles/roles.module';
 
 @Module({
-  imports: [UserModule, PassportModule.register({ session: true })],
+  imports: [
+    UserModule,
+    RolesModule,
+    PassportModule.register({ session: true }),
+  ],
   controllers: [AuthController],
   providers: [
     AuthService,
