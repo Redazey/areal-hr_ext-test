@@ -7,7 +7,7 @@ module.exports = {
       'Roles',
       [
         {
-          name: 'manager',
+          name: 'user',
         },
         {
           name: 'admin',

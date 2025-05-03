@@ -1,5 +1,11 @@
 # areal-hr_ext-test
 
+# Запуск проекта
+docker-compose up --build
+Учетная запись администратора по умолчанию:
+email - admin@gmail.com
+password - admin123123
+
 # Выбранные мною инструменты и среды разработки
 # --ОС--
 Pop!_OS 22.04 LTS (Надстройка над Ubuntu 22.04)

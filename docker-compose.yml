@@ -17,8 +17,6 @@ services:
     build:
       context: ./
       dockerfile: ./containers/api/Dockerfile
-    volumes:
-      - ./api:/app
     ports:
       - "3001:3001"
     networks:
@@ -30,8 +28,6 @@ services:
     build:
       context: ./
       dockerfile: ./containers/app/Dockerfile
-    volumes:
-      - ./app:/app
     ports:
       - "80:80"
     networks:

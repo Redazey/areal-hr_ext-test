@@ -12,6 +12,7 @@ import { UserModule } from './modules/user/user.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { ChangeModule } from './modules/change/change.module';
 import { ChangeLoggerMiddleware } from './common/middlewares/change-logger.middleware';
+import * as process from 'node:process';
 
 dotenv.config({
   path: `../${process.env.NODE_ENV ? process.env.NODE_ENV : ''}.env`,
@@ -21,7 +22,7 @@ dotenv.config({
   imports: [
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
+      host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
