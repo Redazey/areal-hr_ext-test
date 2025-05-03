@@ -12,10 +12,11 @@ const { user } = storeToRefs(appStore);
     <RouterLink to="/departments">Отделы</RouterLink>
     <RouterLink to="/professions">Должности</RouterLink>
     <RouterLink to="/files">Файлы</RouterLink>
-    <RouterLink to="/employees">Сотрудники</RouterLink>
+    <RouterLink v-if="user?.role_id == 1" to="/employees">Сотрудники</RouterLink>
     <RouterLink to="/operations">Кадровые операции</RouterLink>
-    <RouterLink to="/users">Пользователи</RouterLink>
-    <RouterLink to="/changes">История изменений</RouterLink>
+    <RouterLink v-if="user?.role_id == 1" to="/users">Пользователи</RouterLink>
+    <RouterLink v-if="user?.role_id == 1" to="/changes">История изменений</RouterLink>
+    <button @click="appStore.logout">Выход</button>
   </header>
 
   <main>

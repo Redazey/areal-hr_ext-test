@@ -3,9 +3,11 @@ import {
   Controller,
   Get,
   Post,
-  Request,
+  Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
+import { Response, Request } from 'express';
 import { Public } from '../../common/decorators/public.decorator';
 import { LocalLoginGuard } from './local-login.guard';
 import { UserService } from '../user/user.service';
@@ -25,7 +27,7 @@ export class AuthController {
   @Public()
   @UseGuards(LocalLoginGuard)
   @Post('login')
-  async login(@Request() req) {
+  async login(@Req() req): Promise<Response> {
     return new Promise((resolve, reject) => {
       req.login(req.user, (err) => {
         if (err) {
@@ -43,13 +45,21 @@ export class AuthController {
     @Body(new JoiValidationPipe(RegistrationDto))
     registrationDto: CreationAttributes<User>,
   ) {
-    const role = await this.rolesService.findOneByName('manager');
+    const role = await this.rolesService.findOneByName('user');
     registrationDto.role_id = role.id;
     return await this.userService.create(registrationDto);
   }
 
   @Get('me')
-  async me(@Request() req) {
+  async me(@Req() req) {
     return req.user;
+  }
+
+  @Public()
+  @Post('logout')
+  logout(@Req() req: Request, @Res() res: Response) {
+    req.logout(() => {});
+    res.clearCookie('connect.sid');
+    return res.status(200).send({});
   }
 }

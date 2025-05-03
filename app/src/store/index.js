@@ -57,6 +57,16 @@ export const useAppStore = defineStore('app', {
       }
     },
 
+    async logout() {
+      try {
+        await api.post('/auth/logout', {});
+        this.user = null;
+        router.push('/auth');
+      } catch (error) {
+        console.error('Not authenticated:', error);
+      }
+    },
+
     // Функции для получения данных
     async fetchOrganizations() {
       try {

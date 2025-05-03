@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JoiValidationPipe } from '../../pipes/joi-validation/joi-validation.pipe';
@@ -13,12 +14,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { CreationAttributes } from 'sequelize';
 import { User } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AdminRoleGuard } from '../auth/admin-role.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @UseGuards(AdminRoleGuard)
   create(
     @Body(new JoiValidationPipe(CreateUserDto))
     createUserDto: CreationAttributes<User>,
@@ -27,11 +30,13 @@ export class UserController {
   }
 
   @Get()
+  @UseGuards(AdminRoleGuard)
   findAll() {
     return this.userService.findAll();
   }
 
   @Patch(':id')
+  @UseGuards(AdminRoleGuard)
   update(
     @Param('id') id: string,
     @Body(new JoiValidationPipe(UpdateUserDto))
@@ -41,6 +46,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @UseGuards(AdminRoleGuard)
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
