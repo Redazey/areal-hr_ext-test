@@ -5,9 +5,6 @@ COPY ./api/package*.json ./
 RUN npm install
 
 COPY ./.env ../.env
-COPY ./.env ./.env
-COPY ./localhost.pem ../localhost.pem
-COPY ./localhost-key.pem ../localhost-key.pem
 COPY ./api ./
 
 EXPOSE 3001

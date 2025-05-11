@@ -1,10 +1,14 @@
 # areal-hr_ext-test
 
 # Запуск проекта
+необходимо остановить службы, которые занимают 80 и 5432 порты
+
+sudo pkill postgres
+
+sudo systemctl stop apache2
+
 docker-compose up --build
-Учетная запись администратора по умолчанию:
-email - admin@gmail.com
-password - admin123123
+Учетная запись администратора в .env.example
 
 # Выбранные мною инструменты и среды разработки
 # --ОС--
