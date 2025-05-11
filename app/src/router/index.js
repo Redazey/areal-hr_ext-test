@@ -2,44 +2,39 @@ import { createRouter, createWebHistory } from 'vue-router';
 import DepartmentForm from '@/components/DepartmentForm.vue';
 import EmployeeForm from '@/components/EmployeeForm.vue';
 import OperationsForm from '@/components/OperationsForm.vue';
-import UniqueList from '@/components/UniqueList.vue';
 import { useAppStore } from '@/store/index.js';
 import { storeToRefs } from 'pinia';
 import UniqueForm from '@/components/UniqueForm.vue';
 import UserForm from '@/components/UserForm.vue';
 import AuthForm from '@/components/AuthForm.vue';
 import RegistrationForm from '@/components/RegistrationForm.vue';
+import { createListRouteConfig } from '@/router/routePropsFactory.js';
+
+function getFormProps(fields, createFn, updateFn, backPath) {
+  return () => {
+    const appStore = useAppStore();
+    const { isEdit } = storeToRefs(appStore);
+    return {
+      fields: fields.map((f) => ({
+        label: f.charAt(0).toUpperCase() + f.slice(1),
+        type: 'text',
+        model: f,
+        required: true,
+      })),
+      model: isEdit.value ? isEdit.value : Object.fromEntries(fields.map(f => [f, ''])),
+      onSubmit: async (item) => {
+        if (isEdit.value == null) {
+          await appStore[createFn](item);
+        } else {
+          await appStore[updateFn](item);
+        }
+        router.push(backPath);
+      },
+    };
+  };
+}
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { organizations } = storeToRefs(appStore);
-      return {
-        header: 'организаций',
-        rawData: organizations,
-        editAction: (item) => {
-          appStore.setEditing(item);
-          router.push(`/organizations/new`);
-        },
-        addAction: () => {
-          router.push(`/organizations/new`);
-        },
-        deleteAction: (id) => {
-          appStore.deleteOrganization(id);
-        },
-      };
-    },
-    beforeEnter: async (to, from, next) => {
-      const appStore = useAppStore();
-      await appStore.fetchOrganizations();
-
-      next();
-    },
-  },
   {
     path: '/auth',
     name: 'Auth',
@@ -50,361 +45,149 @@ const routes = [
     name: 'Registration',
     component: RegistrationForm,
   },
-  // Организации
-  {
-    path: '/organizations',
-    name: 'Organizations',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { organizations } = storeToRefs(appStore);
-      return {
-        header: 'организаций',
-        rawData: organizations,
-        editAction: (item) => {
-          appStore.setEditing(item);
-          router.push(`/organizations/new`);
-        },
-        addAction: () => {
-          appStore.stopEditing();
-          router.push(`/organizations/new`);
-        },
-        deleteAction: (id) => {
-          appStore.deleteOrganization(id);
-        },
-      };
-    },
-    beforeEnter: async (to, from, next) => {
-      const appStore = useAppStore();
-      await appStore.fetchOrganizations();
 
-      next();
-    },
-  },
+  createListRouteConfig({
+    name: 'Organizations',
+    path: '/organizations',
+    header: 'организаций',
+    storeGetter: 'organizations',
+    fetchAction: 'fetchOrganizations',
+    formRoute: '/organizations/new',
+    editRoute: '/organizations/new',
+  }),
   {
     path: '/organizations/new',
     name: 'CreateOrganization',
     component: UniqueForm,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { isEdit } = storeToRefs(appStore);
-      return {
-        fields: [
-          {
-            label: 'Название',
-            type: 'text',
-            model: 'name',
-            required: true,
-          },
-          {
-            label: 'Комментарий',
-            type: 'text',
-            model: 'comment',
-            required: false,
-          },
-        ],
-        model: isEdit.value ? isEdit.value : { name: '', comment: '' },
-        onSubmit: async (item) => {
-          if (isEdit.value == null) {
-            await appStore.createOrganization(item);
-            router.push(`/organizations`);
-          } else {
-            await appStore.updateOrganization(item);
-            router.push(`/organizations`);
-          }
-        },
-      };
-    },
+    props: getFormProps(['name', 'comment'], 'createOrganization', 'updateOrganization', '/organizations'),
   },
-  // Отделы
-  {
-    path: '/departments',
+
+  createListRouteConfig({
     name: 'Departments',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { departments } = storeToRefs(appStore);
-      return {
-        header: 'отделов',
-        rawData: departments,
-        editAction: (item) => {
-          appStore.setEditing(item);
-          router.push(`/departments/new`);
-        },
-        addAction: () => {
-          appStore.stopEditing();
-          router.push(`/departments/new`);
-        },
-        deleteAction: (id) => {
-          appStore.deleteDepartment(id);
-        },
-      };
-    },
-    beforeEnter: async (to, from, next) => {
-      const appStore = useAppStore();
-      await appStore.fetchDepartments();
+    path: '/departments',
+    header: 'отделов',
+    storeGetter: 'departments',
+    fetchAction: 'fetchDepartments',
+    formRoute: '/departments/new',
+    editRoute: '/departments/new',
+  }),
+  { path: '/departments/new', name: 'CreateDepartment', component: DepartmentForm },
 
-      next();
-    },
-  },
-  {
-    path: '/departments/new',
-    name: 'CreateDepartment',
-    component: DepartmentForm,
-  },
-  // Должности
-  {
-    path: '/professions',
+  createListRouteConfig({
     name: 'Professions',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { professions } = storeToRefs(appStore);
-      return {
-        header: 'должностей',
-        rawData: professions,
-        editAction: (item) => {
-          appStore.setEditing(item);
-          router.push(`/professions/new`);
-        },
-        addAction: () => {
-          router.push(`/professions/new`);
-        },
-        deleteAction: (id) => {
-          appStore.deleteProfession(id);
-        },
-      };
-    },
-    beforeEnter: async (to, from, next) => {
-      const appStore = useAppStore();
-      await appStore.fetchProfessions();
-
-      next();
-    },
-  },
+    path: '/professions',
+    header: 'должностей',
+    storeGetter: 'professions',
+    fetchAction: 'fetchProfessions',
+    formRoute: '/professions/new',
+    editRoute: '/professions/new',
+  }),
   {
     path: '/professions/new',
     name: 'CreateProfessions',
     component: UniqueForm,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { isEdit } = storeToRefs(appStore);
-      return {
-        fields: [
-          {
-            label: 'Название',
-            type: 'text',
-            model: 'name',
-            required: true,
-          },
-          {
-            label: 'Комментарий',
-            type: 'text',
-            model: 'comment',
-            required: false,
-          },
-        ],
-        model: isEdit.value ? isEdit.value : { name: '', comment: '' },
-        onSubmit: async (item) => {
-          if (isEdit.value == null) {
-            await appStore.createProfession(item);
-            router.push(`/professions`);
-          } else {
-            await appStore.updateProfession(item);
-            router.push(`/professions`);
-          }
-        },
-      };
-    },
+    props: getFormProps(['name', 'comment'], 'createProfession', 'updateProfession', '/professions'),
   },
-  // Файлы
-  {
-    path: '/files',
+
+  createListRouteConfig({
     name: 'Files',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { files } = storeToRefs(appStore);
-      return {
-        header: 'файлов',
-        rawData: files,
-        editAction: (item) => {
-          appStore.downloadFile(item.id, item.filename);
+    path: '/files',
+    header: 'файлов',
+    storeGetter: 'files',
+    fetchAction: 'fetchFiles',
+    formRoute: '/files/new',
+    allowEdit: false,
+    allowDelete: true,
+    allowAdd: true,
+    customActions: [
+      {
+        label: 'Скачать',
+        onClick: (item) => {
+          const store = useAppStore();
+          store.downloadFile(item.id, item.name);
         },
-        addAction: () => {
-          router.push(`/files/new`);
-        },
-        deleteAction: (id) => {
-          appStore.deleteFile(id);
-        },
-      };
-    },
-  },
+      },
+    ],
+  }),
   {
     path: '/files/new',
     name: 'UploadFiles',
     component: UniqueForm,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { isEdit } = storeToRefs(appStore);
-      return {
-        fields: [
-          {
-            label: 'Файл',
-            type: 'file',
-            model: 'name',
-            required: true,
-            onChange: (e) => {
-              const file = e.target.files[0];
-              appStore.createFile(file);
-            },
+    props: () => ({
+      fields: [
+        {
+          label: 'Файл',
+          type: 'file',
+          model: 'name',
+          required: true,
+          onChange: (e) => {
+            const file = e.target.files[0];
+            useAppStore().createFile(file);
           },
-        ],
-        model: isEdit.value ? isEdit.value : { filename: '' },
-        onSubmit: async (item) => {
-          if (isEdit.value == null) {
-            router.push(`/files`);
-          }
         },
-      };
-    },
+      ],
+      model: { filename: '' },
+      onSubmit: () => router.push('/files'),
+    }),
   },
-  // Сотрудники
-  {
-    path: '/employees',
-    name: 'Employees',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { employees } = storeToRefs(appStore);
-      return {
-        header: 'сотрудников',
-        rawData: employees,
-        editAction: (item) => {
-          appStore.setEditing(item);
-          router.push(`/employees/new`);
-        },
-        addAction: () => {
-          router.push(`/employees/new`);
-        },
-        deleteAction: (id) => {
-          appStore.deleteEmployee(id);
-        },
-      };
-    },
-    beforeEnter: async (to, from, next) => {
-      const appStore = useAppStore();
-      await appStore.fetchEmployees();
 
-      next();
-    },
-  },
+  createListRouteConfig({
+    name: 'Changes',
+    path: '/changes',
+    header: 'изменений',
+    storeGetter: 'changes',
+    fetchAction: 'fetchChanges',
+    allowEdit: false,
+    allowDelete: false,
+    allowAdd: false,
+    customEdit: () => alert('Недоступно для этой таблицы'),
+    customAdd: () => alert('Недоступно'),
+    customDelete: () => alert('Недоступно'),
+  }),
+
+  createListRouteConfig({
+    name: 'Employees',
+    path: '/employees',
+    header: 'сотрудников',
+    storeGetter: 'employees',
+    fetchAction: 'fetchEmployees',
+    formRoute: '/employees/new',
+    editRoute: '/employees/new',
+  }),
   {
     path: '/employees/new',
     name: 'CreateEmployees',
     component: EmployeeForm,
   },
-  // Кадровые операции
-  {
-    path: '/operations',
-    name: 'Operations',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { operations } = storeToRefs(appStore);
-      return {
-        header: 'операций',
-        rawData: operations,
-        editAction: (item) => {
-          appStore.setEditing(item);
-          router.push(`/operations/new`);
-        },
-        addAction: () => {
-          router.push(`/operations/new`);
-        },
-        deleteAction: (id) => {
-          appStore.deleteOperation(id);
-        },
-      };
-    },
-    beforeEnter: async (to, from, next) => {
-      const appStore = useAppStore();
-      await appStore.fetchOperations();
 
-      next();
-    },
-  },
+  createListRouteConfig({
+    name: 'Operations',
+    path: '/operations',
+    header: 'операций',
+    storeGetter: 'operations',
+    fetchAction: 'fetchOperations',
+    formRoute: '/operations/new',
+    editRoute: '/operations/new',
+  }),
   {
     path: '/operations/new',
     name: 'CreateOperation',
     component: OperationsForm,
   },
-  // Пользователи
-  {
-    path: '/users',
-    name: 'Users',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { users } = storeToRefs(appStore);
-      return {
-        header: 'пользователей',
-        rawData: users,
-        editAction: (item) => {
-          appStore.setEditing(item);
-          router.push(`/users/new`);
-        },
-        addAction: () => {
-          router.push(`/users/new`);
-        },
-        deleteAction: (id) => {
-          appStore.deleteUser(id);
-        },
-      };
-    },
-    beforeEnter: async (to, from, next) => {
-      const appStore = useAppStore();
-      await appStore.fetchUsers();
 
-      next();
-    },
-  },
+  createListRouteConfig({
+    name: 'Users',
+    path: '/users',
+    header: 'пользователей',
+    storeGetter: 'users',
+    fetchAction: 'fetchUsers',
+    formRoute: '/users/new',
+    editRoute: '/users/new',
+  }),
   {
     path: '/users/new',
     name: 'CreateUser',
     component: UserForm,
-  },
-
-  // История изменений
-  {
-    path: '/changes',
-    name: 'Changes',
-    component: UniqueList,
-    props: (route) => {
-      const appStore = useAppStore();
-      const { changes } = storeToRefs(appStore);
-      return {
-        header: 'изменений',
-        rawData: changes,
-        editAction: () => {
-          alert('Недоступно для этой таблицы');
-        },
-        addAction: () => {
-          alert(
-            'Недоступно для этой таблицы, все изменения вносятся автоматически',
-          );
-        },
-        deleteAction: () => {
-          alert('Недоступно для этой таблицы');
-        },
-      };
-    },
-    beforeEnter: async (to, from, next) => {
-      const appStore = useAppStore();
-      await appStore.fetchChanges();
-
-      next();
-    },
   },
 ];
 

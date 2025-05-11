@@ -37,6 +37,7 @@ export const useAppStore = defineStore('app', {
         router.push('/');
       } catch (error) {
         console.error('Error while auth:', error);
+        alert('Ошибка авторизации');
       }
     },
     async registration(credentials) {
@@ -45,6 +46,7 @@ export const useAppStore = defineStore('app', {
         router.push('/auth');
       } catch (error) {
         console.error('Error while registration:', error);
+        alert('Ошибка регистрации');
       }
     },
 
@@ -63,7 +65,7 @@ export const useAppStore = defineStore('app', {
         this.user = null;
         router.push('/auth');
       } catch (error) {
-        console.error('Not authenticated:', error);
+        console.error('', error);
       }
     },
 
@@ -74,6 +76,7 @@ export const useAppStore = defineStore('app', {
         this.organizations = response.data;
       } catch (error) {
         console.error('Error fetching organizations:', error);
+        alert(error.message);
       }
     },
 
@@ -83,6 +86,7 @@ export const useAppStore = defineStore('app', {
         this.departments = response.data;
       } catch (error) {
         console.error('Error fetching departments:', error);
+        alert(error.message);
       }
     },
 
@@ -92,6 +96,7 @@ export const useAppStore = defineStore('app', {
         this.professions = response.data;
       } catch (error) {
         console.error('Error fetching professions:', error);
+        alert(error.message);
       }
     },
 
@@ -101,6 +106,7 @@ export const useAppStore = defineStore('app', {
         this.employees = response.data;
       } catch (error) {
         console.error('Error fetching employees:', error);
+        alert(error.message);
       }
     },
 
@@ -110,6 +116,7 @@ export const useAppStore = defineStore('app', {
         this.users = response.data;
       } catch (error) {
         console.error('Error fetching users:', error);
+        alert(error.message);
       }
     },
 
@@ -119,6 +126,7 @@ export const useAppStore = defineStore('app', {
         this.roles = response.data;
       } catch (error) {
         console.error('Error fetching roles:', error);
+        alert(error.message);
       }
     },
 
@@ -128,6 +136,7 @@ export const useAppStore = defineStore('app', {
         this.files = response.data;
       } catch (error) {
         console.error('Error fetching files:', error);
+        alert(error.message);
       }
     },
 
@@ -137,6 +146,7 @@ export const useAppStore = defineStore('app', {
         this.operations = response.data;
       } catch (error) {
         console.error('Error fetching operations:', error);
+        alert(error.message);
       }
     },
 
@@ -146,6 +156,7 @@ export const useAppStore = defineStore('app', {
         this.changes = response.data;
       } catch (error) {
         console.error('Error fetching changes:', error);
+        alert(error.message);
       }
     },
 
@@ -156,6 +167,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchOrganizations(); // Обновить список организаций
       } catch (error) {
         console.error('Error creating organization:', error);
+        alert(error.message);
       }
     },
 
@@ -165,6 +177,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchOrganizations(); // Обновить список организаций
       } catch (error) {
         console.error('Error updating organization:', error);
+        alert(error.message);
       }
     },
 
@@ -174,6 +187,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchOrganizations(); // Обновить список организаций
       } catch (error) {
         console.error('Error deleting organization:', error);
+        alert(error.message);
       }
     },
 
@@ -184,6 +198,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchEmployees();
       } catch (error) {
         console.error('Error creating employee:', error);
+        alert(error.message);
       }
     },
 
@@ -193,6 +208,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchEmployees();
       } catch (error) {
         console.error('Error updating employee:', error);
+        alert(error.message);
       }
     },
 
@@ -202,6 +218,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchEmployees();
       } catch (error) {
         console.error('Error deleting employee:', error);
+        alert(error.message);
       }
     },
 
@@ -212,6 +229,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchDepartments();
       } catch (error) {
         console.error('Error creating department:', error);
+        alert(error.message);
       }
     },
 
@@ -221,6 +239,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchDepartments();
       } catch (error) {
         console.error('Error updating department:', error);
+        alert(error.message);
       }
     },
 
@@ -230,6 +249,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchDepartments();
       } catch (error) {
         console.error('Error deleting department:', error);
+        alert(error.message);
       }
     },
 
@@ -240,6 +260,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchProfessions();
       } catch (error) {
         console.error('Error creating profession:', error);
+        alert(error.message);
       }
     },
 
@@ -249,6 +270,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchProfessions();
       } catch (error) {
         console.error('Error updating profession:', error);
+        alert(error.message);
       }
     },
 
@@ -258,6 +280,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchProfessions();
       } catch (error) {
         console.error('Error deleting profession:', error);
+        alert(error.message);
       }
     },
 
@@ -268,6 +291,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchUsers();
       } catch (error) {
         console.error('Error creating user:', error);
+        alert(error.message);
       }
     },
 
@@ -277,6 +301,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchUsers();
       } catch (error) {
         console.error('Error updating user:', error);
+        alert(error.message);
       }
     },
 
@@ -286,6 +311,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchUsers();
       } catch (error) {
         console.error('Error deleting user:', error);
+        alert(error.message);
       }
     },
 
@@ -303,6 +329,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchFiles();
       } catch (error) {
         console.error('Error creating user:', error);
+        alert(error.message);
       }
     },
 
@@ -317,6 +344,7 @@ export const useAppStore = defineStore('app', {
         link.click();
       } catch (error) {
         console.error('Error downloading file:', error);
+        alert(error.message);
       }
     },
 
@@ -326,6 +354,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchFiles();
       } catch (error) {
         console.error('Error deleting file:', error);
+        alert(error.message);
       }
     },
 
@@ -336,6 +365,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchOperations();
       } catch (error) {
         console.error('Error creating operation:', error);
+        alert(error.message);
       }
     },
 
@@ -345,6 +375,7 @@ export const useAppStore = defineStore('app', {
         await this.fetchOperations();
       } catch (error) {
         console.error('Error deleting operation:', error);
+        alert(error.message);
       }
     },
   },

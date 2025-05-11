@@ -17,7 +17,21 @@ export class OperationService {
 
   findAll() {
     return this.operationModule.findAll({
-      include: [Department, Profession, Employee],
+      attributes: ['id', 'salary'],
+      include: [
+        {
+          model: Department,
+          attributes: ['name'],
+        },
+        {
+          model: Profession,
+          attributes: ['name'],
+        },
+        {
+          model: Employee,
+          attributes: ['last_name', 'first_name'],
+        },
+      ],
       where: {
         [Op.or]: [{ deleted_at: null }],
       },

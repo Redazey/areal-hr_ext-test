@@ -12,10 +12,16 @@ dotenv.config({
 });
 
 async function bootstrap() {
+  const httpsOptions = {
+    key: fs.readFileSync('../localhost-key.pem'),
+    cert: fs.readFileSync('../localhost.pem'),
+  };
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    httpsOptions,
+  });
   app.enableCors({
-    origin: process.env.APP_HOST || 'https://localhost:5173',
+    origin: process.env.APP_HOST || 'http://localhost',
     credentials: true,
   });
 

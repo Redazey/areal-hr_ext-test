@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Список {{ header }}</h2>
-    <button @click="addAction">Добавить</button>
+    <button v-if="showAdd" @click="addAction">Добавить</button>
     <table v-if="columns.length > 0">
       <thead>
         <tr>
@@ -14,11 +14,23 @@
       <tbody>
         <tr v-for="(item, rowIndex) in rawData.value" :key="rowIndex">
           <td v-for="(key, colIndex) in columns" :key="colIndex">
-            {{ item[key] }}
+            <template v-if="typeof item[key] === 'object' && item[key] !== null">
+              {{ Object.values(item[key]).join(' ') }}
+            </template>
+            <template v-else>
+              {{ item[key] }}
+            </template>
           </td>
           <td>
-            <button @click="editAction(item)">Редактировать</button>
-            <button @click="deleteAction(item.id)">Удалить</button>
+            <button v-if="showEdit" @click="editAction(item)">Редактировать</button>
+            <button v-if="showDelete" @click="deleteAction(item.id)">Удалить</button>
+            <button
+              v-for="(action, index) in customActions"
+              :key="index"
+              @click="action.onClick(item)"
+            >
+              {{ action.label }}
+            </button>
           </td>
         </tr>
       </tbody>
@@ -32,14 +44,20 @@ import { computed } from 'vue';
 
 const props = defineProps({
   header: String,
-  rawData: {
-    type: Object,
-    required: true,
-  },
+  rawData: Object,
   editAction: Function,
   deleteAction: Function,
   addAction: Function,
+  showEdit: { type: Boolean, default: true },
+  showDelete: { type: Boolean, default: true },
+  showAdd: { type: Boolean, default: true },
+  customActions: {
+    type: Array,
+    default: () => [],
+  },
 });
+
+console.log(props.customActions)
 
 const columns = computed(() => {
   if (!props.rawData.value || props.rawData.value.length === 0) return [];
