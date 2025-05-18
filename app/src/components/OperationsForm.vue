@@ -3,37 +3,25 @@
     <h2>Совершить операцию</h2>
     <form @submit.prevent="submitForm">
       <!-- Выпадающий список для выбора сотрудника -->
-      <div class="form-group">
-        <label>Сотрудник</label>
-        <select v-model="operation.employeeId" required>
-          <option value="" disabled>Выберите сотрудника</option>
-          <option v-for="emp in employees" :key="emp.id" :value="emp.id">
-            {{ `${emp.last_name} ${emp.first_name} ${emp.patronymic}` }}
-          </option>
-        </select>
-      </div>
+      <TitleSelect
+          @update:modelValue="operation.employee_id = $event"
+          :list="employees"
+          title="Сотрудник"
+      />
 
       <!-- Выпадающий список для выбора должности -->
-      <div class="form-group">
-        <label>Должность</label>
-        <select v-model="operation.professionId" required>
-          <option value="" disabled>Выберите должность</option>
-          <option v-for="prof in professions" :key="prof.id" :value="prof.id">
-            {{ prof.name }}
-          </option>
-        </select>
-      </div>
+      <TitleSelect
+          @update:modelValue="operation.profession_id = $event"
+          :list="professions"
+          title="Должность"
+      />
 
       <!-- Выпадающий список для выбора отдела -->
-      <div class="form-group">
-        <label>Отдел</label>
-        <select v-model="operation.departmentId">
-          <option value="" disabled>Выберите отдел</option>
-          <option v-for="dep in departments" :key="dep.id" :value="dep.id">
-            {{ dep.name }}
-          </option>
-        </select>
-      </div>
+      <TitleSelect
+          @update:modelValue="operation.department_id = $event"
+          :list="departments"
+          title="Отдел"
+      />
 
       <textarea placeholder="Зарплата" v-model="operation.salary" />
 
@@ -47,11 +35,12 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAppStore } from '@/store';
 import { storeToRefs } from 'pinia';
+import TitleSelect from "@/components/TitleSelect.vue";
 
 const operation = ref({
-  employeeId: '',
-  professionId: '',
-  departmentId: '',
+  employee_id: '',
+  profession_id: '',
+  department_id: '',
   salary: '',
 });
 

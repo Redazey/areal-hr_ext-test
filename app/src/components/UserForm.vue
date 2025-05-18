@@ -32,12 +32,11 @@
       />
       <p v-if="errors.password" class="error">{{ errors.password }}</p>
 
-      <select v-model="user.role_id">
-        <option value="" disabled>Выберите роль</option>
-        <option v-for="role in roles" :key="role.id" :value="role.id">
-          {{ role.name }}
-        </option>
-      </select>
+      <TitleSelect
+          @update:modelValue="user.role_id = $event"
+          :list="roles"
+          title="Выберите роль"
+      />
       <p v-if="errors.role_id" class="error">{{ errors.role_id }}</p>
 
       <button type="submit">{{ isEdit ? 'Обновить' : 'Добавить' }}</button>
@@ -51,6 +50,7 @@ import { useRouter } from 'vue-router';
 import { useAppStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import * as yup from 'yup';
+import TitleSelect from "@/components/TitleSelect.vue";
 
 const router = useRouter();
 const appStore = useAppStore();

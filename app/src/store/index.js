@@ -104,6 +104,12 @@ export const useAppStore = defineStore('app', {
       try {
         const response = await api.get('/employee');
         this.employees = response.data;
+
+        if (this.employees.length > 0) {
+          for (const employee of this.employees) {
+            employee.name = `${employee.first_name} ${employee.last_name} ${employee.patronymic}`;
+          }
+        }
       } catch (error) {
         console.error('Error fetching employees:', error);
         alert(error.message);

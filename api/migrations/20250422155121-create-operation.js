@@ -10,19 +10,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      employeeId: {
+      employee_id: {
         type: Sequelize.INTEGER,
         references: { model: 'Employees', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      professionId: {
+      profession_id: {
         type: Sequelize.INTEGER,
         references: { model: 'Professions', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      departmentId: {
+      department_id: {
         type: Sequelize.INTEGER,
         references: { model: 'Departments', key: 'id' },
         onUpdate: 'CASCADE',

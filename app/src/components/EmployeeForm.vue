@@ -38,15 +38,11 @@
       />
 
       <!-- Выпадающий список для выбора файла -->
-      <div class="form-group">
-        <label>Файлы</label>
-        <select v-model="employee.passport_scan">
-          <option value="" disabled>Выберите файл</option>
-          <option v-for="file in files" :key="file.id" :value="file.id">
-            {{ file.name }}
-          </option>
-        </select>
-      </div>
+      <TitleSelect
+          @update:modelValue="employee.passport_scan = $event"
+          :list="files"
+          title="Выберите скан паспорта"
+      />
 
       <button type="submit">{{ isEdit ? 'Обновить' : 'Добавить' }}</button>
     </form>
@@ -58,6 +54,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAppStore } from '@/store';
 import { storeToRefs } from 'pinia';
+import TitleSelect from "@/components/TitleSelect.vue";
 
 const employee = ref({
   last_name: '',

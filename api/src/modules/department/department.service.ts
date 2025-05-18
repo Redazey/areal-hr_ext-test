@@ -11,21 +11,13 @@ export class DepartmentService {
   ) {}
 
   create(createDepartmentDto: CreationAttributes<Department>) {
+    console.log(createDepartmentDto);
     return this.departmentModule.create(createDepartmentDto);
   }
 
   async findAll() {
     const departments = await this.departmentModule.findAll({
-      include: [
-        {
-          model: Organization,
-          attributes: ['name'],
-        },
-        {
-          model: Department,
-          attributes: ['name'],
-        },
-      ],
+      include: [Organization, Department],
       where: {
         [Op.or]: [{ deleted_at: null }],
       },

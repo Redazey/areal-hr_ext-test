@@ -3,26 +3,18 @@
     <h2>{{ isEdit ? 'Редактировать' : 'Создать' }} отдел</h2>
     <form @submit.prevent="submitForm">
       <!-- Выпадающий список для выбора организации -->
-      <div class="form-group">
-        <label>Организация</label>
-        <select v-model="department.organizationId" required>
-          <option value="" disabled>Выберите организацию</option>
-          <option v-for="org in organizations" :key="org.id" :value="org.id">
-            {{ org.name }}
-          </option>
-        </select>
-      </div>
+      <TitleSelect
+          @update:modelValue="department.organization_id = $event"
+          :list="organizations"
+          label="Организация"
+      />
 
       <!-- Выпадающий список для выбора родительского отдела -->
-      <div class="form-group">
-        <label>Родительский отдел</label>
-        <select v-model="department.parentDepartmentId">
-          <option value="" disabled>Выберите отдел</option>
-          <option v-for="dept in departments" :key="dept.id" :value="dept.id">
-            {{ dept.name }}
-          </option>
-        </select>
-      </div>
+      <TitleSelect
+          @update:modelValue="department.parent_department_id = $event"
+          :list="departments"
+          label="Родительский отдел"
+      />
 
       <input
         placeholder="Название"
@@ -46,8 +38,9 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAppStore } from '@/store';
 import { storeToRefs } from 'pinia';
+import TitleSelect from "@/components/TitleSelect.vue";
 
-const department = ref({ name: '', comment: '', organizationId: '' });
+const department = ref({ name: '', comment: '', organization_id: '' });
 
 const appStore = useAppStore();
 const router = useRouter();

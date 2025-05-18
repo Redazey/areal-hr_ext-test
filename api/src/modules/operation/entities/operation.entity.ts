@@ -21,21 +21,21 @@ import { Department } from '../../department/entities/department.entity';
 export class Operation extends Model {
   @ForeignKey(() => Employee)
   @Column
-  employeeId: number;
+  employee_id: number;
 
   @BelongsTo(() => Employee)
   employee: Employee;
 
   @ForeignKey(() => Profession)
   @Column
-  professionId: number;
+  profession_id: number;
 
   @BelongsTo(() => Profession)
   profession: Profession;
 
   @ForeignKey(() => Department)
   @Column
-  departmentId: number;
+  department_id: number;
 
   @BelongsTo(() => Department)
   department: Department;
