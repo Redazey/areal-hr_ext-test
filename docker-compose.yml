@@ -34,6 +34,14 @@ services:
       - app-network
     depends_on:
       - backend
+  docs:
+    build:
+      context: ./
+      dockerfile: ./containers/docs/Dockerfile
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
 
 networks:
   app-network:

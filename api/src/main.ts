@@ -20,6 +20,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
   });
+
   app.enableCors({
     origin: process.env.APP_HOST || 'http://localhost',
     credentials: true,

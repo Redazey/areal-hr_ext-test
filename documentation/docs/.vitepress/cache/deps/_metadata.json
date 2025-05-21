@@ -1,0 +1,40 @@
+{
+  "hash": "a374308d",
+  "configHash": "e9360ddd",
+  "lockfileHash": "a0395bc2",
+  "browserHash": "26274a9c",
+  "optimized": {
+    "vue": {
+      "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "0cac7c64",
+      "needsInterop": false
+    },
+    "vitepress > @vue/devtools-api": {
+      "src": "../../../../node_modules/@vue/devtools-api/dist/index.js",
+      "file": "vitepress___@vue_devtools-api.js",
+      "fileHash": "d23a0d9a",
+      "needsInterop": false
+    },
+    "vitepress > @vueuse/core": {
+      "src": "../../../../node_modules/@vueuse/core/index.mjs",
+      "file": "vitepress___@vueuse_core.js",
+      "fileHash": "1f4546fd",
+      "needsInterop": false
+    },
+    "@theme/index": {
+      "src": "../../../../node_modules/vitepress/dist/client/theme-default/index.js",
+      "file": "@theme_index.js",
+      "fileHash": "dac1f2fa",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-LOIFVOWP": {
+      "file": "chunk-LOIFVOWP.js"
+    },
+    "chunk-TGLERUJR": {
+      "file": "chunk-TGLERUJR.js"
+    }
+  }
+}
